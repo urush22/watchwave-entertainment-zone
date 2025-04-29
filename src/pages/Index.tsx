@@ -1,13 +1,34 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import { Layout } from "@/components/layout/Layout";
+import { HeroSection } from "@/components/movie/HeroSection";
+import { ContentRow } from "@/components/movie/ContentRow";
+import { 
+  featuredContent, 
+  trendingData, 
+  newReleasesData, 
+  popularData, 
+  moviesData, 
+  tvShowsData
+} from "@/services/mockData";
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
+    <Layout>
+      <HeroSection 
+        title={featuredContent.title}
+        overview={featuredContent.overview}
+        backdropPath={featuredContent.backdropPath}
+        id={featuredContent.id}
+        type={featuredContent.type}
+      />
+      
+      <div className="container mt-8">
+        <ContentRow title="Trending Now" items={trendingData} />
+        <ContentRow title="New Releases" items={newReleasesData} />
+        <ContentRow title="Popular Movies" items={moviesData.slice(0, 8)} />
+        <ContentRow title="Popular TV Shows" items={tvShowsData.slice(0, 8)} />
       </div>
-    </div>
+    </Layout>
   );
 };
 
