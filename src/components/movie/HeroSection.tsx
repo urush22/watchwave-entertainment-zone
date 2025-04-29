@@ -1,7 +1,8 @@
 
 import { Link } from 'react-router-dom';
-import { Play, Plus } from 'lucide-react';
+import { Play, Plus, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useMyList } from '@/contexts/MyListContext';
 
 interface HeroSectionProps {
   title: string;
@@ -18,6 +19,21 @@ export const HeroSection = ({
   id, 
   type 
 }: HeroSectionProps) => {
+  const { isInMyList, toggleMyList } = useMyList();
+  
+  const inMyList = isInMyList(id);
+  
+  const handleToggleMyList = () => {
+    toggleMyList({
+      id,
+      title,
+      backdropPath,
+      posterPath: backdropPath, // In case we need a poster
+      type,
+      overview
+    });
+  };
+
   return (
     <div className="relative h-[70vh] md:h-[85vh] w-full overflow-hidden">
       <div 
@@ -39,9 +55,22 @@ export const HeroSection = ({
                 Play
               </Link>
             </Button>
-            <Button variant="outline" size="lg">
-              <Plus className="mr-2 h-5 w-5" />
-              My List
+            <Button 
+              variant="outline" 
+              size="lg"
+              onClick={handleToggleMyList}
+            >
+              {inMyList ? (
+                <>
+                  <Check className="mr-2 h-5 w-5" />
+                  My List
+                </>
+              ) : (
+                <>
+                  <Plus className="mr-2 h-5 w-5" />
+                  My List
+                </>
+              )}
             </Button>
           </div>
         </div>

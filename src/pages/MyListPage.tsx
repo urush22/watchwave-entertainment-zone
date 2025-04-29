@@ -1,27 +1,10 @@
 
 import { Layout } from "@/components/layout/Layout";
 import { MovieCard } from "@/components/movie/MovieCard";
-import { useState, useEffect } from "react";
-import { moviesData, tvShowsData } from "@/services/mockData";
+import { useMyList } from "@/contexts/MyListContext";
 
-// For now, we'll mock the user's list with some selected content
 const MyListPage = () => {
-  const [myList, setMyList] = useState<Array<{
-    id: string;
-    title: string;
-    posterPath: string;
-    type: 'movie' | 'tv';
-  }>>([]);
-
-  // Simulate loading the user's list
-  useEffect(() => {
-    // Mock data - combining some movies and TV shows
-    const savedList = [
-      ...moviesData.slice(0, 3),
-      ...tvShowsData.slice(0, 3)
-    ];
-    setMyList(savedList);
-  }, []);
+  const { myList } = useMyList();
 
   return (
     <Layout>
@@ -37,6 +20,8 @@ const MyListPage = () => {
                 title={item.title}
                 posterPath={item.posterPath}
                 type={item.type}
+                overview={item.overview}
+                backdropPath={item.backdropPath}
               />
             ))}
           </div>

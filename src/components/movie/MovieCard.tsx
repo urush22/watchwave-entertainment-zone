@@ -1,16 +1,34 @@
 
 import { Link } from 'react-router-dom';
-import { Play, Plus } from 'lucide-react';
+import { Play, Plus, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useMyList } from '@/contexts/MyListContext';
 
 interface MovieCardProps {
   id: string;
   title: string;
   posterPath: string;
   type: 'movie' | 'tv';
+  overview?: string;
+  backdropPath?: string;
 }
 
-export const MovieCard = ({ id, title, posterPath, type }: MovieCardProps) => {
+export const MovieCard = ({ id, title, posterPath, type, overview, backdropPath }: MovieCardProps) => {
+  const { isInMyList, toggleMyList } = useMyList();
+  
+  const inMyList = isInMyList(id);
+  
+  const handleToggleMyList = () => {
+    toggleMyList({
+      id,
+      title,
+      posterPath,
+      type,
+      overview,
+      backdropPath
+    });
+  };
+
   return (
     <div className="movie-card">
       <div className="relative">
@@ -30,8 +48,18 @@ export const MovieCard = ({ id, title, posterPath, type }: MovieCardProps) => {
                 Play
               </Link>
             </Button>
-            <Button size="sm" variant="outline" className="px-2">
-              <Plus className="h-4 w-4" />
+            <Button 
+              size="sm" 
+              variant="outline" 
+              className="px-2"
+              onClick={handleToggleMyList}
+              title={inMyList ? "Remove from My List" : "Add to My List"}
+            >
+              {inMyList ? (
+                <Check className="h-4 w-4" />
+              ) : (
+                <Plus className="h-4 w-4" />
+              )}
             </Button>
           </div>
         </div>

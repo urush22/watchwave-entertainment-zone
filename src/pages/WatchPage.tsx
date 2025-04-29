@@ -2,12 +2,14 @@
 import { useParams, Link } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Plus } from 'lucide-react';
+import { ArrowLeft, Plus, Check } from 'lucide-react';
 import { getContentById } from '@/services/mockData';
+import { useMyList } from '@/contexts/MyListContext';
 
 const WatchPage = () => {
   const { id, type } = useParams<{ id: string; type: string }>();
   const content = getContentById(id || '');
+  const { isInMyList, toggleMyList } = useMyList();
 
   // If content not found
   if (!content) {
@@ -23,6 +25,12 @@ const WatchPage = () => {
       </Layout>
     );
   }
+  
+  const inMyList = isInMyList(content.id);
+  
+  const handleToggleMyList = () => {
+    toggleMyList(content);
+  };
 
   return (
     <Layout>
@@ -47,9 +55,18 @@ const WatchPage = () => {
             <div className="text-center">
               <h2 className="text-xl font-bold mb-4">Playing: {content.title}</h2>
               <p className="mb-8">Video playback would start automatically here</p>
-              <Button>
-                <Plus className="mr-2 h-4 w-4" />
-                Add to My List
+              <Button onClick={handleToggleMyList}>
+                {inMyList ? (
+                  <>
+                    <Check className="mr-2 h-4 w-4" />
+                    Remove from My List
+                  </>
+                ) : (
+                  <>
+                    <Plus className="mr-2 h-4 w-4" />
+                    Add to My List
+                  </>
+                )}
               </Button>
             </div>
           </div>

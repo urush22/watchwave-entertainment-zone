@@ -14,28 +14,31 @@ import TVShowsPage from "./pages/TVShowsPage";
 import WatchPage from "./pages/WatchPage";
 import MyListPage from "./pages/MyListPage";
 import NotFound from "./pages/NotFound";
+import { MyListProvider } from "./contexts/MyListContext";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/search" element={<SearchPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="/movies" element={<MovieListingPage />} />
-          <Route path="/tv-shows" element={<TVShowsPage />} />
-          <Route path="/my-list" element={<MyListPage />} />
-          <Route path="/:type/:id" element={<DetailPage />} />
-          <Route path="/:type/:id/watch" element={<WatchPage />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+      <MyListProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/search" element={<SearchPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
+            <Route path="/movies" element={<MovieListingPage />} />
+            <Route path="/tv-shows" element={<TVShowsPage />} />
+            <Route path="/my-list" element={<MyListPage />} />
+            <Route path="/:type/:id" element={<DetailPage />} />
+            <Route path="/:type/:id/watch" element={<WatchPage />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </MyListProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );

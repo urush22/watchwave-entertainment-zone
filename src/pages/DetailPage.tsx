@@ -2,14 +2,16 @@
 import { useParams, Link } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
-import { Play, Plus, Info } from 'lucide-react';
+import { Play, Plus, Check } from 'lucide-react';
 import { getContentById, popularData } from '@/services/mockData';
 import { ContentRow } from '@/components/movie/ContentRow';
+import { useMyList } from '@/contexts/MyListContext';
 
 const DetailPage = () => {
   const { id, type } = useParams<{ id: string; type: string }>();
   const content = getContentById(id || '');
-
+  const { isInMyList, toggleMyList } = useMyList();
+  
   // If content not found
   if (!content) {
     return (
@@ -24,6 +26,12 @@ const DetailPage = () => {
       </Layout>
     );
   }
+  
+  const inMyList = isInMyList(content.id);
+  
+  const handleToggleMyList = () => {
+    toggleMyList(content);
+  };
 
   return (
     <Layout>
@@ -62,9 +70,22 @@ const DetailPage = () => {
                     Play
                   </Link>
                 </Button>
-                <Button variant="outline" size="lg">
-                  <Plus className="mr-2 h-5 w-5" />
-                  Add to My List
+                <Button 
+                  variant="outline" 
+                  size="lg" 
+                  onClick={handleToggleMyList}
+                >
+                  {inMyList ? (
+                    <>
+                      <Check className="mr-2 h-5 w-5" />
+                      Remove from My List
+                    </>
+                  ) : (
+                    <>
+                      <Plus className="mr-2 h-5 w-5" />
+                      Add to My List
+                    </>
+                  )}
                 </Button>
               </div>
               
