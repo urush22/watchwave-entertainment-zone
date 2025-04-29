@@ -13,17 +13,19 @@ interface MovieCardProps {
 export const MovieCard = ({ id, title, posterPath, type }: MovieCardProps) => {
   return (
     <div className="movie-card">
-      <Link to={`/${type}/${id}`}>
-        <img
-          src={posterPath}
-          alt={title}
-          className="w-full h-full object-cover"
-        />
+      <div className="relative">
+        <Link to={`/${type}/${id}`}>
+          <img
+            src={posterPath}
+            alt={title}
+            className="w-full h-full object-cover"
+          />
+        </Link>
         <div className="movie-card-overlay">
           <h3 className="text-sm font-medium mb-1">{title}</h3>
           <div className="flex space-x-2 mt-2">
-            <Button size="sm" asChild className="w-full">
-              <Link to={`/${type}/${id}/watch`}>
+            <Button size="sm" className="w-full">
+              <Link to={`/${type}/${id}/watch`} className="flex items-center">
                 <Play className="h-4 w-4 mr-1" />
                 Play
               </Link>
@@ -33,7 +35,7 @@ export const MovieCard = ({ id, title, posterPath, type }: MovieCardProps) => {
             </Button>
           </div>
         </div>
-      </Link>
+      </div>
     </div>
   );
 };

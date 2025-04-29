@@ -12,6 +12,7 @@ import SignupPage from "./pages/SignupPage";
 import MovieListingPage from "./pages/MovieListingPage";
 import TVShowsPage from "./pages/TVShowsPage";
 import WatchPage from "./pages/WatchPage";
+import MyListPage from "./pages/MyListPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -29,6 +30,7 @@ const App = () => (
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/movies" element={<MovieListingPage />} />
           <Route path="/tv-shows" element={<TVShowsPage />} />
+          <Route path="/my-list" element={<MyListPage />} />
           <Route path="/:type/:id" element={<DetailPage />} />
           <Route path="/:type/:id/watch" element={<WatchPage />} />
           <Route path="*" element={<NotFound />} />
